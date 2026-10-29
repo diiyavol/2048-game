@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 class Game {
   constructor(initialState = []) {
@@ -12,7 +12,7 @@ class Game {
         ];
 
     this.score = 0;
-    this.status = 'idle';
+    this.status = "idle";
     this.firstMove = true;
   }
 
@@ -117,7 +117,7 @@ class Game {
   }
 
   start() {
-    this.status = 'playing';
+    this.status = "playing";
     this.addRandomTile();
     this.addRandomTile();
     this.updateBoard();
@@ -131,7 +131,7 @@ class Game {
       [0, 0, 0, 0],
     ];
     this.score = 0;
-    this.status = 'idle';
+    this.status = "idle";
     this.firstMove = true;
     this.start();
   }
@@ -159,24 +159,24 @@ class Game {
 
   updateBoard() {
     const field = this.field;
-    const cells = document.querySelectorAll('.field-cell');
+    const cells = document.querySelectorAll(".field-cell");
 
     cells.forEach((cell, index) => {
       const row = Math.floor(index / 4);
       const col = index % 4;
       const value = field[row][col];
 
-      cell.textContent = value || '';
-      cell.className = 'field-cell' + (value ? ` field-cell--${value}` : '');
+      cell.textContent = value || "";
+      cell.className = "field-cell" + (value ? ` field-cell--${value}` : "");
     });
-    document.querySelector('.game-score').textContent = this.score;
+    document.querySelector(".game-score").textContent = this.score;
   }
 
   isGameWon() {
     for (let row = 0; row < 4; row++) {
       for (let col = 0; col < 4; col++) {
         if (this.field[row][col] === 2048) {
-          this.status = 'won';
+          this.status = "won";
 
           return true;
         }

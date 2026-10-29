@@ -1,36 +1,44 @@
-'use strict';
+"use strict";
 
-import Game from '../modules/Game.class.js';
+import Game from "../modules/Game.class.js";
 
 const game = new Game();
 
-const buttonStart = document.querySelector('.button');
-const messageWon = document.querySelector('.message-win');
-const messageLose = document.querySelector('.message-lose');
-const messageStart = document.querySelector('.message-start');
+const buttonStart = document.querySelector(".button");
+const messageWon = document.querySelector(".message-win");
+const messageLose = document.querySelector(".message-lose");
+const messageStart = document.querySelector(".message-start");
 
-buttonStart.addEventListener('click', () => {
-  if (buttonStart.classList.contains('restart')) {
-    buttonStart.textContent = 'Start';
-    buttonStart.classList.add('start');
-    buttonStart.classList.remove('restart');
-    messageWon.classList.add('hidden');
-    messageLose.classList.add('hidden');
+buttonStart.addEventListener("click", () => {
+  if (buttonStart.classList.contains("restart")) {
+    buttonStart.textContent = "Start";
+    buttonStart.classList.add("start");
+    buttonStart.classList.remove("restart");
+    messageWon.classList.add("hidden");
+    messageLose.classList.add("hidden");
     game.restart();
   } else {
-    if (game.getStatus() === 'idle') {
+    if (game.getStatus() === "idle") {
       game.start();
-      messageStart.classList.add('hidden');
+      messageStart.classList.add("hidden");
     }
+  }
+
+  if (buttonStart.classList.contains("start")) {
+    buttonStart.textContent = "Restart";
+    buttonStart.classList.remove("start");
+    buttonStart.classList.add("restart");
+    messageWon.classList.add("hidden");
+    messageLose.classList.add("hidden");
   }
 });
 
-document.addEventListener('keydown', (e) => {
-  if (game.getStatus() !== 'playing') {
+document.addEventListener("keydown", (e) => {
+  if (game.getStatus() !== "playing") {
     return;
   }
 
-  if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+  if (!["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
     return;
   }
 
@@ -39,16 +47,16 @@ document.addEventListener('keydown', (e) => {
   const oldField = JSON.stringify(game.getState());
 
   switch (e.key) {
-    case 'ArrowLeft':
+    case "ArrowLeft":
       game.moveLeft();
       break;
-    case 'ArrowRight':
+    case "ArrowRight":
       game.moveRight();
       break;
-    case 'ArrowUp':
+    case "ArrowUp":
       game.moveUp();
       break;
-    case 'ArrowDown':
+    case "ArrowDown":
       game.moveDown();
       break;
   }
@@ -59,17 +67,11 @@ document.addEventListener('keydown', (e) => {
     game.updateBoard();
 
     if (game.isGameWon()) {
-      messageWon.classList.remove('hidden');
+      messageWon.classList.remove("hidden");
     }
 
     if (game.checkGameOver()) {
-      messageLose.classList.remove('hidden');
+      messageLose.classList.remove("hidden");
     }
-  }
-
-  if (!game.firstMove) {
-    buttonStart.textContent = 'Restart';
-    buttonStart.classList.remove('start');
-    buttonStart.classList.add('restart');
   }
 });
